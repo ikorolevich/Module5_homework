@@ -34,7 +34,6 @@ namespace Module5_homework
             {
                 User.IsAnyPet = false;
                 User.Pets = 0;
-                User.PetName = GetPetNames(User.Pets);
             }
 
             Console.WriteLine("How many fav. colors do you have");
