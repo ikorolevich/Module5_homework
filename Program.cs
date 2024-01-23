@@ -21,15 +21,13 @@ namespace Module5_homework
             User.Name = Console.ReadLine();
             Console.WriteLine("Enter the Last Name");
             User.LastName = Console.ReadLine();
-            Console.WriteLine("Enter age");
-            User.Age = Convert.ToInt16(Console.ReadLine());
+            TryNum("age", out User.Age);
             Console.WriteLine("Do you have a pet ? -  Y / N");
             string answer = Console.ReadLine();
             if (answer == "Y" || answer == "y")
             {
                 User.IsAnyPet = true;
-                Console.WriteLine("How many pets do you have ?");
-                User.Pets = Convert.ToInt16(Console.ReadLine());
+                TryNum("the number of pets you have", out User.Pets);
                 User.PetNames = GetPetNames(User.Pets);
             }
             else
@@ -38,10 +36,7 @@ namespace Module5_homework
                 User.Pets = 0;
                 User.PetNames = GetPetNames(User.Pets);
             }
-
-            Console.WriteLine("How many fav. colors do you have");
-            User.FavColor = Convert.ToInt16(Console.ReadLine());
-            
+            TryNum("the number of favorites colors",out User.FavColor);
             if (User.FavColor > 0)
             {
                 User.FavColors = GetFavColors(User.FavColor);
@@ -95,6 +90,51 @@ namespace Module5_homework
                     Console.WriteLine(FavColors[i]);
                 }
             }
+
+        }
+        public static bool CheckNum(string number, out int corrnumber)
+        {
+            if (int.TryParse(number, out int result))
+            {
+                if (result >= 0)
+                {
+                    corrnumber = result;
+                    return true;
+                }
+                else
+                {
+                    corrnumber=0;
+                    return false;
+                }
+            }
+            else{ 
+                corrnumber=0;
+                return false; 
+            }
+
+        }
+        public static void TryNum (string input, out int age)
+        {
+            const int ATTEMPTS = 2;
+            int NumOfAttempts = 1;
+            do
+            {
+                Console.WriteLine("Enter {0}",input);
+                if (CheckNum(Console.ReadLine(), out age))
+                {
+                    break;
+                }
+                else
+                {
+                    if (NumOfAttempts > ATTEMPTS)
+                    {
+                        Console.WriteLine("Exit");
+                        System.Environment.Exit(1);
+                    }
+                    Console.WriteLine("Incorrect value, try again");
+                    NumOfAttempts++;
+                }
+            } while (true);
 
         }
     }
